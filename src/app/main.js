@@ -1,6 +1,7 @@
 const { app, BrowserWindow } = require('electron');
+const { createSetupWindow } = require('../renderer/js/setup.js'); // Verwijzing naar setup.js
 
-function createWindow() {
+function createMainWindow() {
     const win = new BrowserWindow({
         width: 1280,
         height: 1024,
@@ -11,4 +12,7 @@ function createWindow() {
     win.loadFile('src/renderer/html/main.html');
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+    // Start eerst de setup
+    createSetupWindow(createMainWindow); // Geef de mainWindow functie mee om te starten na setup
+});
